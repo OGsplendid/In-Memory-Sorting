@@ -18,13 +18,13 @@
 .row {
   display: flex;
   align-items: center;
-  width: 590px;
-  height: 30px;
+  min-width: 590px;
+  max-width: 620px;
+  max-height: 30px;
   list-style-type: none;
 }
 
 .cell {
-  width: 150px;
   border-color: lightgray;
   border-style: solid;
   border-width: 1px;
@@ -32,4 +32,12 @@
   margin-top: 3px;
   padding: 3px;
   font-size: 15px;
+}
+
+.id, .year, .imdb {
+  width: 50px;
+}
+
+.title {
+  width: 160px;
 }

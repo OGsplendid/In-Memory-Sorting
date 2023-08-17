@@ -8,6 +8,13 @@ export default class Table {
 
     this.array = array;
 
+    // this.types = {
+    //   id: 'number',
+    //   title: 'string',
+    //   imdb: 'number',
+    //   year: 'number',
+    // };
+
     this.onClick = this.onClick.bind(this);
     this.element.addEventListener('click', this.onClick);
   }
@@ -17,7 +24,7 @@ export default class Table {
     row.classList.add('row', 'sub');
     for (const key in obj) {
       const item = document.createElement('li');
-      item.classList.add('cell');
+      item.classList.add('cell', key);
       item.textContent = obj[key];
       row.insertAdjacentElement('beforeend', item);
     }
@@ -38,16 +45,28 @@ export default class Table {
     });
   }
 
+  sortData(el) {
+    if (this.element.classList.contains('sorted')) {
+      if (el === 'title') {
+        this.array.sort((a, b) => b[el].localeCompare(a[el]));
+      } else {
+        this.array.sort((a, b) => b[el] - a[el]);
+      }
+      this.element.classList.remove('sorted');
+    } else {
+      if (el === 'title') {
+        this.array.sort((a, b) => a[el].localeCompare(b[el]));
+      } else {
+        this.array.sort((a, b) => a[el] - b[el]);
+      }
+      this.element.classList.add('sorted');
+    }
+  }
+
   onClick(e) {
     if (e.target.classList.contains('main-cell')) {
       const key = e.target.textContent;
-      if (this.element.classList.contains('sorted')) {
-        this.array.sort((a, b) => b[key] - a[key]);
-        this.element.classList.remove('sorted');
-      } else {
-        this.array.sort((a, b) => a[key] - b[key]);
-        this.element.classList.add('sorted');
-      }
+      this.sortData(key);
       this.clearTable();
       this.renderTable();
     }
